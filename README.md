@@ -1,0 +1,30 @@
+# git-aliases
+Git aliases used through many of my projects
+
+[alias]
+	ci = "!git add -A && git commit -m"
+	br = branch
+	ch = checkout
+	master = checkout master
+	st = status
+	cp = cherry-pick
+	rh = reset --hard
+	mt = mergetool
+	
+	# git pull git push
+	pp = "!git pull && git push"
+
+	# git gc && git prune && git gc
+	gca = "!f() { git gc && git prune && git gc; }; f"
+
+	# merge current branch to branch specified as parameter, ie. "git mr develop" merges current branch into develop branch
+	mr = "!f() { local targetbranch=${1} && local mybranch=`git rev-parse --abbrev-ref HEAD` && git pull && git push && git checkout $targetbranch && git pull && git merge $mybranch && git push && git checkout $mybranch; }; f"
+
+	# merge master to current branch
+	mm = "!f() { git pull && git merge origin/master && git push; }; f"
+
+	# clear removed branches
+	clear = "remote prune origin"
+
+	# create new branch
+	new = "!f() { local originBranch=${2-master} && git fetch && git checkout -b ${1} origin/$originBranch && git push -u origin ${1}; }; f"
